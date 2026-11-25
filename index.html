@@ -49,23 +49,29 @@
     background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container);
   }
   .vazio { padding: 24px; border-radius: 12px; background: var(--md-sys-color-surface-container); }
+  .piloto {
+    position: sticky; top: 0; z-index: 1; margin: 0; padding: 12px 16px; text-align: center;
+    background: var(--md-sys-color-error-container); color: var(--md-sys-color-on-error-container);
+    font-size: .9rem; font-weight: 600;
+  }
   footer { padding: 16px; text-align: center; font-size: .8rem; color: var(--md-sys-color-on-surface-variant); }
 </style>
 </head>
 <body>
+<p class="piloto" role="note">Piloto público: tudo aqui pode ser visto por qualquer pessoa com o link. Nada de dado de cliente.</p>
 <header>
   <img class="logo-claro" src="assets/logo-leega-positivo.png" alt="Leega">
   <img class="logo-escuro" src="assets/logo-leega-negativo.png" alt="Leega">
   <h1>Artefatos da BU de Digital Analytics</h1>
 </header>
 <main>
-  <p class="intro">Artefatos higienizados publicados pelos projetos da BU para outras áreas. Acesso restrito a convidados.</p>
+  <p class="intro">Artefatos higienizados publicados pelos projetos da BU para outras áreas. Nesta fase de piloto o site é aberto; o acesso restrito a convidados chega com a migração para o Cloudflare.</p>
   <label for="busca" class="intro">Buscar artefato</label><br>
   <input id="busca" class="busca" type="search" placeholder="Título, descrição ou dono" autocomplete="off">
   <ul id="lista" class="grade" aria-live="polite"></ul>
   <div id="vazio" class="vazio" hidden>Nenhum artefato publicado ainda. A publicação é feita pela skill <code>/padroes-bu:publicar-artefato</code>, sempre por pull request.</div>
 </main>
-<footer>Leega, BU de Digital Analytics. Conteúdo interno.</footer>
+<footer>Leega, BU de Digital Analytics. Piloto público no GitHub Pages.</footer>
 <script>
   const lista = document.getElementById('lista');
   const vazio = document.getElementById('vazio');
