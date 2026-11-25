@@ -7,107 +7,509 @@
 <title>Artefatos da BU</title>
 <link rel="stylesheet" href="assets/tokens.css">
 <style>
-  :root { color-scheme: light dark; }
+  :root { color-scheme: light dark; --gaveta-largura: min(320px, 85vw); }
   * { box-sizing: border-box; }
+  html, body { height: 100%; }
   body {
-    margin: 0;
+    margin: 0; display: flex; flex-direction: column; overflow: hidden;
     background: var(--md-sys-color-surface);
     color: var(--md-sys-color-on-surface);
     font-family: "Montserrat", system-ui, sans-serif;
     line-height: 1.5;
   }
-  header {
-    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
-    padding: 16px; border-bottom: 4px solid var(--md-sys-color-primary);
+  svg.ic { width: 24px; height: 24px; fill: currentColor; flex: none; }
+  :focus-visible { outline: 3px solid var(--md-sys-color-on-surface); outline-offset: 2px; }
+
+  .piloto {
+    margin: 0; padding: 8px 16px; text-align: center; flex: none;
+    background: var(--md-sys-color-error-container); color: var(--md-sys-color-on-error-container);
+    font-size: .85rem; font-weight: 600;
   }
-  header img { height: 32px; width: auto; }
-  .logo-escuro { display: none; }
+
+  /* Top app bar */
+  .appbar {
+    flex: none; display: flex; align-items: center; flex-wrap: wrap; gap: 4px 4px;
+    padding: 8px 8px; min-height: 56px;
+    background: var(--md-sys-color-surface-container);
+    border-bottom: 3px solid var(--md-sys-color-primary);
+  }
+  .appbar-titulo { flex: 1 1 100%; order: 10; min-width: 0; display: flex; align-items: center; gap: 8px; padding: 0 8px; }
+  .appbar-titulo h1 {
+    margin: 0; font-size: 1.05rem; font-weight: 600; line-height: 1.3;
+    min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .espaco { flex: 1 1 0; }
+  .chip {
+    display: inline-block; padding: 2px 8px; border-radius: 8px; white-space: nowrap; flex: none;
+    background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container);
+    font-size: .8rem;
+  }
+  .btn-icone {
+    position: relative; width: 40px; height: 40px; padding: 0; border: 0; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+    background: transparent; color: var(--md-sys-color-on-surface-variant); font: inherit;
+  }
+  .btn-icone:hover:not(:disabled) { background: color-mix(in srgb, var(--md-sys-color-on-surface-variant) 10%, transparent); }
+  .btn-icone:active:not(:disabled) { background: color-mix(in srgb, var(--md-sys-color-on-surface-variant) 16%, transparent); }
+  .btn-icone:disabled { opacity: .38; cursor: default; }
+  .btn-icone[hidden] { display: none; }
+  #btn-menu { color: var(--md-sys-color-on-surface); }
+
+  /* Corpo: menu + conteúdo */
+  .corpo { flex: 1; min-height: 0; display: flex; position: relative; }
+  .gaveta {
+    display: flex; flex-direction: column; width: var(--gaveta-largura); flex: none;
+    background: var(--md-sys-color-surface-container-low); color: var(--md-sys-color-on-surface);
+    border-right: 1px solid var(--md-sys-color-outline-variant);
+  }
+  .gaveta-topo { padding: 16px 16px 8px; }
+  .gaveta-topo img { height: 32px; width: auto; display: block; }
+  .logo-escuro { display: none !important; }
   @media (prefers-color-scheme: dark) {
-    .logo-claro { display: none; }
-    .logo-escuro { display: inline; }
+    .logo-claro { display: none !important; }
+    .logo-escuro { display: block !important; }
   }
-  header h1 { margin: 0; font-size: 1.25rem; font-weight: 700; }
-  main { max-width: 1040px; margin: 0 auto; padding: 24px 16px 48px; }
+  .gaveta-busca { padding: 8px 12px; }
+  .campo {
+    display: flex; align-items: center; gap: 8px; height: 48px; padding: 0 16px;
+    border-radius: 28px; background: var(--md-sys-color-surface-container-highest);
+    color: var(--md-sys-color-on-surface-variant);
+  }
+  .campo:focus-within { outline: 3px solid var(--md-sys-color-on-surface); outline-offset: 2px; }
+  .campo input {
+    flex: 1; min-width: 0; height: 100%; border: 0; background: transparent; outline: none;
+    color: var(--md-sys-color-on-surface); font: inherit; font-size: .95rem;
+  }
+  .campo input::placeholder { color: var(--md-sys-color-on-surface-variant); opacity: 1; }
+  .gaveta nav { flex: 1; overflow-y: auto; padding: 4px 12px 16px; }
+  .gaveta ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+  .gaveta li[hidden] { display: none; }
+  .item {
+    display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 8px 16px;
+    border-radius: 28px; text-decoration: none; color: var(--md-sys-color-on-surface-variant);
+    font-size: .9rem; font-weight: 500; line-height: 1.3;
+  }
+  .item:hover { background: color-mix(in srgb, var(--md-sys-color-on-surface) 8%, transparent); }
+  .item[aria-current="page"] {
+    background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container);
+    font-weight: 700;
+  }
+  .item span { min-width: 0; overflow-wrap: anywhere; }
+  .rotulo-secao { margin: 12px 0 4px; padding: 0 16px; font-size: .75rem; font-weight: 600; color: var(--md-sys-color-on-surface-variant); }
+  .aviso-menu { margin: 8px 4px; padding: 12px 16px; border-radius: 12px; font-size: .85rem; background: var(--md-sys-color-surface-container); }
+  .aviso-menu[hidden] { display: none; }
+  .scrim { display: none; }
+
+  .conteudo { flex: 1; min-width: 0; position: relative; display: flex; flex-direction: column; }
+  .catalogo { flex: 1; overflow: auto; }
+  .catalogo[hidden], .visualizador[hidden] { display: none; }
+  .catalogo main { max-width: 1040px; margin: 0 auto; padding: 24px 16px 24px; }
   .intro { color: var(--md-sys-color-on-surface-variant); margin: 0 0 24px; }
+  .catalogo label.intro { display: block; margin: 0 0 8px; }
   .busca {
     width: 100%; max-width: 420px; padding: 12px 16px; margin-bottom: 24px;
     border: 1px solid var(--md-sys-color-outline); border-radius: 4px;
     background: var(--md-sys-color-surface); color: var(--md-sys-color-on-surface); font: inherit;
   }
-  .grade { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); padding: 0; margin: 0; list-style: none; }
+  .grade { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr)); padding: 0; margin: 0; list-style: none; }
   .cartao {
     display: block; height: 100%; padding: 16px; border-radius: 12px; text-decoration: none;
     background: var(--md-sys-color-surface-container); color: var(--md-sys-color-on-surface);
     border: 1px solid transparent;
   }
-  .cartao:hover, .cartao:focus-visible { border-color: var(--md-sys-color-outline); outline: none; }
+  .cartao:hover { border-color: var(--md-sys-color-outline); }
   .cartao h2 { margin: 0 0 8px; font-size: 1.05rem; }
   .cartao p { margin: 0 0 12px; color: var(--md-sys-color-on-surface-variant); font-size: .95rem; }
   .meta { font-size: .8rem; color: var(--md-sys-color-on-surface-variant); }
-  .chip {
-    display: inline-block; padding: 2px 8px; border-radius: 8px; margin-right: 8px;
-    background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container);
-  }
+  .meta .chip { margin-right: 8px; }
   .vazio { padding: 24px; border-radius: 12px; background: var(--md-sys-color-surface-container); }
-  .piloto {
-    position: sticky; top: 0; z-index: 1; margin: 0; padding: 12px 16px; text-align: center;
-    background: var(--md-sys-color-error-container); color: var(--md-sys-color-on-error-container);
-    font-size: .9rem; font-weight: 600;
-  }
+  .vazio[hidden] { display: none; }
   footer { padding: 16px; text-align: center; font-size: .8rem; color: var(--md-sys-color-on-surface-variant); }
+
+  .visualizador { flex: 1; min-height: 0; position: relative; display: flex; flex-direction: column; }
+  .visualizador iframe { flex: 1; width: 100%; border: 0; background: var(--md-sys-color-surface); }
+  .visualizador iframe[hidden] { display: none; }
+  .nao-encontrado { margin: 24px 16px; padding: 24px; border-radius: 12px; background: var(--md-sys-color-surface-container); max-width: 560px; }
+  .nao-encontrado[hidden] { display: none; }
+  .nao-encontrado h2 { margin: 0 0 8px; font-size: 1.15rem; }
+  .nao-encontrado p { margin: 0 0 16px; color: var(--md-sys-color-on-surface-variant); }
+  .btn-tonal {
+    display: inline-flex; align-items: center; min-height: 40px; padding: 0 24px; border-radius: 20px;
+    background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container);
+    text-decoration: none; font-weight: 600; font-size: .9rem;
+  }
+
+  .snackbar {
+    position: fixed; left: 50%; bottom: 24px; z-index: 50; transform: translate(-50%, 16px);
+    max-width: calc(100vw - 32px); padding: 12px 16px; border-radius: 4px; opacity: 0; visibility: hidden;
+    background: var(--md-sys-color-inverse-surface); color: var(--md-sys-color-inverse-on-surface);
+    font-size: .9rem; transition: opacity .2s, transform .2s, visibility 0s linear .2s;
+  }
+  .snackbar.visivel { opacity: 1; visibility: visible; transform: translate(-50%, 0); transition: opacity .2s, transform .2s; }
+
+  /* Telas largas: menu fixo */
+  @media (min-width: 960px) {
+    #btn-menu { display: none; }
+    .appbar { flex-wrap: nowrap; padding: 8px 16px; }
+    .appbar-titulo { flex: 1 1 0; order: 0; }
+    .espaco { display: none; }
+  }
+  /* Telas estreitas: gaveta modal */
+  @media (max-width: 959.98px) {
+    .gaveta {
+      position: fixed; top: 0; bottom: 0; left: 0; z-index: 40; width: var(--gaveta-largura);
+      border-radius: 0 16px 16px 0; border-right: 0;
+      transform: translateX(-100%); visibility: hidden;
+      transition: transform .25s cubic-bezier(.3, 0, 0, 1), visibility 0s linear .25s;
+    }
+    .gaveta.aberta { transform: none; visibility: visible; transition: transform .25s cubic-bezier(.3, 0, 0, 1); }
+    .scrim {
+      display: block; position: fixed; inset: 0; z-index: 30; opacity: 0; visibility: hidden;
+      background: color-mix(in srgb, var(--md-sys-color-scrim) 32%, transparent);
+      transition: opacity .25s, visibility 0s linear .25s;
+    }
+    .scrim.aberta { opacity: 1; visibility: visible; transition: opacity .25s; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .gaveta, .gaveta.aberta, .scrim, .scrim.aberta, .snackbar, .snackbar.visivel { transition: none; }
+  }
 </style>
 </head>
 <body>
 <p class="piloto" role="note">Piloto público: tudo aqui pode ser visto por qualquer pessoa com o link. Nada de dado de cliente.</p>
-<header>
-  <img class="logo-claro" src="assets/logo-leega-positivo.png" alt="Leega">
-  <img class="logo-escuro" src="assets/logo-leega-negativo.png" alt="Leega">
-  <h1>Artefatos da BU de Digital Analytics</h1>
+
+<header class="appbar" id="appbar">
+  <button type="button" class="btn-icone" id="btn-menu" aria-label="Abrir menu" title="Abrir menu" aria-controls="gaveta" aria-expanded="false">
+    <svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+  </button>
+  <button type="button" class="btn-icone" id="btn-voltar" aria-label="Voltar ao catálogo" title="Voltar ao catálogo" hidden>
+    <svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+  </button>
+  <span class="espaco"></span>
+  <div class="appbar-titulo">
+    <h1 id="titulo">Artefatos da BU de Digital Analytics</h1>
+    <span class="chip" id="versao" hidden></span>
+  </div>
+  <button type="button" class="btn-icone" id="btn-anterior" aria-label="Artefato anterior" title="Artefato anterior (Alt+←)" hidden>
+    <svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+  </button>
+  <button type="button" class="btn-icone" id="btn-proximo" aria-label="Próximo artefato" title="Próximo artefato (Alt+→)" hidden>
+    <svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+  </button>
+  <button type="button" class="btn-icone" id="btn-nova-aba" aria-label="Abrir em nova aba" title="Abrir em nova aba" hidden>
+    <svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+  </button>
+  <button type="button" class="btn-icone" id="btn-copiar" aria-label="Copiar link" title="Copiar link" hidden>
+    <svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
+  </button>
 </header>
-<main>
-  <p class="intro">Artefatos higienizados publicados pelos projetos da BU para outras áreas. Nesta fase de piloto o site é aberto; o acesso restrito a convidados chega com a migração para o Cloudflare.</p>
-  <label for="busca" class="intro">Buscar artefato</label><br>
-  <input id="busca" class="busca" type="search" placeholder="Título, descrição ou dono" autocomplete="off">
-  <ul id="lista" class="grade" aria-live="polite"></ul>
-  <div id="vazio" class="vazio" hidden>Nenhum artefato publicado ainda. A publicação é feita pela skill <code>/padroes-bu:publicar-artefato</code>, sempre por pull request.</div>
-</main>
-<footer>Leega, BU de Digital Analytics. Piloto público no GitHub Pages.</footer>
+
+<div class="corpo" id="corpo">
+  <div class="scrim" id="scrim"></div>
+  <aside class="gaveta" id="gaveta">
+    <div class="gaveta-topo">
+      <img class="logo-claro" src="assets/logo-leega-positivo.png" alt="Leega">
+      <img class="logo-escuro" src="assets/logo-leega-negativo.png" alt="Leega">
+    </div>
+    <div class="gaveta-busca">
+      <label class="campo">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <input id="busca-menu" type="search" placeholder="Buscar artefato" aria-label="Buscar artefato no menu" autocomplete="off">
+      </label>
+    </div>
+    <nav aria-label="Artefatos">
+      <ul id="menu-lista"></ul>
+      <p class="aviso-menu" id="menu-aviso" role="status" hidden></p>
+    </nav>
+  </aside>
+
+  <div class="conteudo" id="conteudo">
+    <section class="catalogo" id="catalogo" aria-label="Catálogo">
+      <main>
+        <p class="intro">Artefatos higienizados publicados pelos projetos da BU para outras áreas. Nesta fase de piloto o site é aberto; o acesso restrito a convidados chega com a migração para o Cloudflare.</p>
+        <label for="busca" class="intro">Buscar artefato</label>
+        <input id="busca" class="busca" type="search" placeholder="Título, descrição ou dono" autocomplete="off">
+        <ul id="lista" class="grade" aria-live="polite"></ul>
+        <div id="vazio" class="vazio" hidden>Nenhum artefato publicado ainda. A publicação é feita pela skill <code>/padroes-bu:publicar-artefato</code>, sempre por pull request.</div>
+      </main>
+      <footer>Leega, BU de Digital Analytics. Piloto público no GitHub Pages.</footer>
+    </section>
+    <section class="visualizador" id="visualizador" aria-label="Visualizador de artefato" hidden>
+      <iframe id="quadro" title="Artefato" allow="clipboard-write; fullscreen" hidden></iframe>
+      <div class="nao-encontrado" id="nao-encontrado" hidden>
+        <h2>Artefato não encontrado</h2>
+        <p>Não existe um artefato com o identificador informado no link. Ele pode ter sido renomeado ou ainda não foi publicado.</p>
+        <a class="btn-tonal" href="#/">Ir para o início</a>
+      </div>
+    </section>
+  </div>
+</div>
+<div class="snackbar" id="snackbar" role="status" aria-live="polite"></div>
+
 <script>
-  const lista = document.getElementById('lista');
-  const vazio = document.getElementById('vazio');
-  const busca = document.getElementById('busca');
+(function () {
+  'use strict';
+  const TITULO_BASE = 'Artefatos da BU';
+  const TITULO_CATALOGO = 'Artefatos da BU de Digital Analytics';
+  const $ = id => document.getElementById(id);
+  const el = {
+    corpo: $('corpo'), gaveta: $('gaveta'), scrim: $('scrim'), conteudo: $('conteudo'), appbar: $('appbar'),
+    btnMenu: $('btn-menu'), btnVoltar: $('btn-voltar'), btnAnt: $('btn-anterior'), btnProx: $('btn-proximo'),
+    btnAba: $('btn-nova-aba'), btnCopiar: $('btn-copiar'), titulo: $('titulo'), versao: $('versao'),
+    menuLista: $('menu-lista'), menuAviso: $('menu-aviso'), buscaMenu: $('busca-menu'),
+    catalogo: $('catalogo'), visualizador: $('visualizador'), quadro: $('quadro'), naoEncontrado: $('nao-encontrado'),
+    lista: $('lista'), vazio: $('vazio'), busca: $('busca'), snack: $('snackbar')
+  };
+  const larga = window.matchMedia('(min-width: 960px)');
   let artefatos = [];
+  let erro = false;
+  let itensMenu = new Map();   // slug -> {li, a, texto}
+  let itemInicio = null;
+  let atual = null;            // artefato aberto ou null
+  let gavetaAberta = false;
 
-  function texto(v) { return v == null ? '' : String(v); }
+  const texto = v => v == null ? '' : String(v);
+  const norm = s => texto(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  const versaoCurta = a => 'v' + texto(a.versao).replace(/^v/, '');
+  const hashDe = slug => '#/a/' + encodeURIComponent(slug);
 
-  function render(filtro) {
-    const f = filtro.trim().toLowerCase();
-    const itens = artefatos.filter(a =>
-      !f || [a.titulo, a.descricao, a.dono, a.slug].some(c => texto(c).toLowerCase().includes(f)));
-    lista.replaceChildren();
-    vazio.hidden = artefatos.length > 0;
+  function icone(d) {
+    const ns = 'http://www.w3.org/2000/svg';
+    const s = document.createElementNS(ns, 'svg');
+    s.setAttribute('class', 'ic'); s.setAttribute('viewBox', '0 0 24 24');
+    s.setAttribute('aria-hidden', 'true'); s.setAttribute('focusable', 'false');
+    const p = document.createElementNS(ns, 'path'); p.setAttribute('d', d);
+    s.append(p); return s;
+  }
+  const D_HOME = 'M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z';
+  const D_DOC = 'M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z';
+
+  /* ---------- Menu ---------- */
+  function criarItem(href, rotulo, d) {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.className = 'item'; a.href = href;
+    const sp = document.createElement('span'); sp.textContent = rotulo;
+    a.append(icone(d), sp); li.append(a);
+    a.addEventListener('click', () => { if (!larga.matches) fecharGaveta(true); });
+    return { li, a };
+  }
+
+  function montarMenu() {
+    el.menuLista.replaceChildren();
+    itensMenu = new Map();
+    const inicio = criarItem('#/', 'Início', D_HOME);
+    itemInicio = inicio.a;
+    el.menuLista.append(inicio.li);
+    if (artefatos.length) {
+      const rot = document.createElement('li');
+      rot.className = 'rotulo-secao'; rot.textContent = 'Artefatos';
+      rot.setAttribute('role', 'presentation');
+      el.menuLista.append(rot);
+    }
+    for (const a of artefatos) {
+      const it = criarItem(hashDe(a.slug), texto(a.titulo || a.slug), D_DOC);
+      itensMenu.set(a.slug, { li: it.li, a: it.a, alvo: norm([a.titulo, a.slug].join(' ')) });
+      el.menuLista.append(it.li);
+    }
+    if (erro) mostrarAvisoMenu('Não foi possível carregar a lista de artefatos. Tente recarregar a página.');
+    else if (!artefatos.length) mostrarAvisoMenu('Nenhum artefato publicado ainda.');
+    else mostrarAvisoMenu('');
+    filtrarMenu();
+    marcarAtivo();
+  }
+
+  function mostrarAvisoMenu(msg) { el.menuAviso.textContent = msg; el.menuAviso.hidden = !msg; }
+
+  function filtrarMenu() {
+    const f = norm(el.buscaMenu.value.trim());
+    let visiveis = 0;
+    for (const { li, alvo } of itensMenu.values()) {
+      const ok = !f || alvo.includes(f);
+      li.hidden = !ok; if (ok) visiveis++;
+    }
+    const rot = el.menuLista.querySelector('.rotulo-secao');
+    if (rot) rot.hidden = visiveis === 0;
+    if (artefatos.length && !erro) mostrarAvisoMenu(visiveis === 0 ? 'Nenhum artefato encontrado para essa busca.' : '');
+  }
+
+  function marcarAtivo() {
+    if (itemInicio) {
+      if (!atual && !slugInvalido) itemInicio.setAttribute('aria-current', 'page'); else itemInicio.removeAttribute('aria-current');
+    }
+    for (const [slug, { a }] of itensMenu) {
+      if (atual && atual.slug === slug) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    }
+  }
+
+  /* ---------- Gaveta (tela estreita) ---------- */
+  function definirInerte(aplicar) {
+    for (const n of [el.conteudo, el.appbar, document.querySelector('.piloto')]) {
+      if (aplicar) n.setAttribute('inert', ''); else n.removeAttribute('inert');
+    }
+  }
+  function abrirGaveta() {
+    if (larga.matches || gavetaAberta) return;
+    gavetaAberta = true;
+    el.gaveta.classList.add('aberta'); el.scrim.classList.add('aberta');
+    el.btnMenu.setAttribute('aria-expanded', 'true');
+    definirInerte(true);
+    void el.gaveta.offsetWidth;  // força o estilo antes do foco
+    (itemInicio || el.buscaMenu).focus();
+  }
+  function fecharGaveta(devolverFoco) {
+    if (!gavetaAberta) return;
+    gavetaAberta = false;
+    el.gaveta.classList.remove('aberta'); el.scrim.classList.remove('aberta');
+    el.btnMenu.setAttribute('aria-expanded', 'false');
+    definirInerte(false);
+    if (devolverFoco) el.btnMenu.focus();
+  }
+  el.btnMenu.addEventListener('click', () => gavetaAberta ? fecharGaveta(true) : abrirGaveta());
+  el.scrim.addEventListener('click', () => fecharGaveta(true));
+  larga.addEventListener('change', () => { if (larga.matches) fecharGaveta(false); });
+
+  /* ---------- Rotas ---------- */
+  let slugInvalido = false;
+  let carregado = false;
+
+  function slugDoHash() {
+    const m = /^#\/a\/([^/?#]+)/.exec(location.hash);
+    if (!m) return null;
+    try { return decodeURIComponent(m[1]); } catch (e) { return m[1]; }
+  }
+
+  function indiceAtual() { return atual ? artefatos.indexOf(atual) : -1; }
+
+  function rotear() {
+    if (!carregado) return;
+    const slug = slugDoHash();
+    atual = slug ? (artefatos.find(a => a.slug === slug) || null) : null;
+    slugInvalido = !!slug && !atual;
+    const emViewer = !!slug;
+
+    el.catalogo.hidden = emViewer;
+    el.visualizador.hidden = !emViewer;
+    for (const b of [el.btnVoltar, el.btnAnt, el.btnProx, el.btnAba, el.btnCopiar]) b.hidden = !atual && b !== el.btnVoltar;
+    el.btnVoltar.hidden = !emViewer;
+
+    if (atual) {
+      const i = indiceAtual();
+      el.btnAnt.disabled = i <= 0;
+      el.btnProx.disabled = i >= artefatos.length - 1;
+      el.titulo.textContent = texto(atual.titulo || atual.slug);
+      el.versao.textContent = versaoCurta(atual); el.versao.hidden = false;
+      document.title = texto(atual.titulo || atual.slug) + ' | ' + TITULO_BASE;
+      el.naoEncontrado.hidden = true;
+      const destino = 'artefatos/' + encodeURIComponent(atual.slug) + '/';
+      el.quadro.title = 'Artefato: ' + texto(atual.titulo || atual.slug);
+      if (el.quadro.dataset.slug !== atual.slug) {
+        el.quadro.dataset.slug = atual.slug;
+        el.quadro.contentWindow ? el.quadro.contentWindow.location.replace(destino) : (el.quadro.src = destino);
+      }
+      el.quadro.hidden = false;
+    } else if (slugInvalido) {
+      el.titulo.textContent = 'Artefato não encontrado';
+      el.versao.hidden = true;
+      document.title = 'Artefato não encontrado | ' + TITULO_BASE;
+      el.quadro.hidden = true; delete el.quadro.dataset.slug; el.quadro.removeAttribute('src');
+      el.naoEncontrado.hidden = false;
+    } else {
+      el.titulo.textContent = TITULO_CATALOGO;
+      el.versao.hidden = true;
+      document.title = TITULO_BASE;
+      el.quadro.hidden = true; delete el.quadro.dataset.slug; el.quadro.removeAttribute('src');
+      el.naoEncontrado.hidden = true;
+    }
+    marcarAtivo();
+    if (atual && itensMenu.has(atual.slug)) itensMenu.get(atual.slug).a.scrollIntoView({ block: 'nearest' });
+  }
+  window.addEventListener('hashchange', rotear);
+
+  function irPara(delta) {
+    const i = indiceAtual(), j = i + delta;
+    if (i < 0 || j < 0 || j >= artefatos.length) return;
+    location.hash = hashDe(artefatos[j].slug);
+  }
+  el.btnAnt.addEventListener('click', () => irPara(-1));
+  el.btnProx.addEventListener('click', () => irPara(1));
+  el.btnVoltar.addEventListener('click', () => { location.hash = '#/'; });
+  el.btnAba.addEventListener('click', () => {
+    if (atual) window.open('artefatos/' + encodeURIComponent(atual.slug) + '/', '_blank', 'noopener');
+  });
+
+  /* ---------- Copiar link ---------- */
+  let timerSnack = null;
+  function avisar(msg) {
+    el.snack.textContent = msg; el.snack.classList.add('visivel');
+    clearTimeout(timerSnack); timerSnack = setTimeout(() => el.snack.classList.remove('visivel'), 4000);
+  }
+  function copiarFallback(t) {
+    const ta = document.createElement('textarea');
+    ta.value = t; ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+    document.body.append(ta); ta.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    ta.remove(); return ok;
+  }
+  el.btnCopiar.addEventListener('click', async () => {
+    const url = location.href;
+    let ok = false;
+    try { await navigator.clipboard.writeText(url); ok = true; } catch (e) { ok = copiarFallback(url); }
+    avisar(ok ? 'Link copiado' : 'Não foi possível copiar. Copie o endereço pela barra do navegador.');
+  });
+
+  /* ---------- Atalhos ---------- */
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && gavetaAberta) { e.preventDefault(); fecharGaveta(true); return; }
+    if (!e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    const t = e.target;
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+    if (!atual || gavetaAberta) return;
+    e.preventDefault();
+    irPara(e.key === 'ArrowLeft' ? -1 : 1);
+  });
+
+  /* ---------- Catálogo ---------- */
+  function renderCatalogo(filtro) {
+    const f = norm(filtro.trim());
+    const itens = artefatos.filter(a => !f || [a.titulo, a.descricao, a.dono, a.slug].some(c => norm(c).includes(f)));
+    el.lista.replaceChildren();
+    el.vazio.hidden = artefatos.length > 0;
+    if (erro) { el.vazio.hidden = false; el.vazio.textContent = 'Não foi possível carregar a lista de artefatos. Tente recarregar a página.'; }
     for (const a of itens) {
       const li = document.createElement('li');
       const link = document.createElement('a');
       link.className = 'cartao';
-      link.href = 'artefatos/' + encodeURIComponent(texto(a.slug)) + '/';
+      link.href = hashDe(texto(a.slug));
       const h2 = document.createElement('h2'); h2.textContent = texto(a.titulo || a.slug);
       const p = document.createElement('p'); p.textContent = texto(a.descricao);
       const meta = document.createElement('div'); meta.className = 'meta';
-      const chip = document.createElement('span'); chip.className = 'chip'; chip.textContent = 'v' + texto(a.versao).replace(/^v/, '');
+      const chip = document.createElement('span'); chip.className = 'chip'; chip.textContent = versaoCurta(a);
       meta.append(chip, document.createTextNode(texto(a.dono) + (a.publicado_em ? ', ' + a.publicado_em : '')));
       link.append(h2, p, meta);
       li.append(link);
-      lista.append(li);
+      el.lista.append(li);
     }
   }
+  el.busca.addEventListener('input', () => renderCatalogo(el.busca.value));
+  el.buscaMenu.addEventListener('input', filtrarMenu);
 
+  /* ---------- Carga ---------- */
   fetch('manifest.json', { cache: 'no-store' })
-    .then(r => r.ok ? r.json() : [])
-    .catch(() => [])
-    .then(dados => { artefatos = Array.isArray(dados) ? dados : []; render(''); });
-
-  busca.addEventListener('input', () => render(busca.value));
+    .then(r => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
+    .catch(() => { erro = true; return []; })
+    .then(dados => {
+      artefatos = (Array.isArray(dados) ? dados : []).filter(a => a && a.slug)
+        .sort((x, y) => texto(x.titulo || x.slug).localeCompare(texto(y.titulo || y.slug), 'pt-BR'));
+      carregado = true;
+      montarMenu();
+      renderCatalogo('');
+      rotear();
+    });
+})();
 </script>
 </body>
 </html>
