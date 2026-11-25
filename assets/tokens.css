@@ -1,0 +1,249 @@
+/*
+ * Design system Leega, tokens CSS. Gerado por tools/design-system-leega/gerar-tokens.mjs; não editar à mão.
+ * Fonte da marca: manual Leega 2026 (amarelo #FFA400, preto #000000, Gilroy, Montserrat, Merriweather).
+ * Oficiais do manual: --leega-yellow, --leega-black, as famílias tipográficas e as regras de título,
+ * subtítulo e corpo de cada layout (ver classes no fim).
+ * Derivado pelo agente: demais papéis de cor do Material Design 3, gerados de #FFA400 com
+ * @material/material-color-utilities 0.3.0, com primary e on-primary sobrescritos pela marca.
+ * Neutros em cinza puro (croma zero), nos mesmos tons do M3 (decisão da dona, 2026-11-19).
+ * Contraste: #FFA400 sobre #000000 = 10,56:1; sobre #FFFFFF = 1,99:1;
+ * sobre o surface claro #fcfcfc = 1,94:1. Por isso on-primary é preto e o amarelo
+ * nunca é texto, ícone, borda ou indicador no tema claro (ver --leega-accent-text).
+ * Limitação aceita: checkbox e switch selecionados não têm token de contorno no Material Web 2.5.0;
+ * a forma amarela sobre fundo claro fica abaixo de 3:1 e o estado é identificado pelo glifo e pela alça pretos.
+ * As camadas de estado de checkbox e switch seguem o acento neutro no claro; só o preenchimento selecionado segue amarelo.
+ * Funciona com Material Web (@material/web) e qualquer CSS que use --md-sys-*.
+ * Não incluído por falta de definição no manual: forma (raio de cantos) e elevação.
+ */
+
+:root {
+  /* Marca (oficial) */
+  --leega-yellow: #FFA400;
+  --leega-black: #000000;
+
+  /* Tipografia (famílias oficiais; Gilroy é fonte comercial, ver licença) */
+  --md-ref-typeface-brand: "Gilroy", "Montserrat", system-ui, sans-serif;
+  --md-ref-typeface-plain: "Gilroy", "Montserrat", system-ui, sans-serif;
+  --leega-typeface-signature: "Merriweather", Georgia, serif;
+
+  /* Pesos do M3: display e headline 700 (manual, títulos bold); title 500 (escolha do agente);
+     body 400 (manual no layout Montserrat; o layout Gilroy pede light, não aplicado sem a Gilroy) */
+  --md-sys-typescale-display-large-weight: 700;
+  --md-sys-typescale-display-medium-weight: 700;
+  --md-sys-typescale-display-small-weight: 700;
+  --md-sys-typescale-headline-large-weight: 700;
+  --md-sys-typescale-headline-medium-weight: 700;
+  --md-sys-typescale-headline-small-weight: 700;
+  --md-sys-typescale-title-large-weight: 500;
+  --md-sys-typescale-title-medium-weight: 500;
+  --md-sys-typescale-title-small-weight: 500;
+  --md-sys-typescale-body-large-weight: 400;
+  --md-sys-typescale-body-medium-weight: 400;
+  --md-sys-typescale-body-small-weight: 400;
+
+  /* Cores, tema claro */
+  --md-sys-color-primary: #FFA400;
+  --md-sys-color-on-primary: #000000;
+  --md-sys-color-primary-container: #ffddb7;
+  --md-sys-color-on-primary-container: #2a1700;
+  --md-sys-color-secondary: #715a41;
+  --md-sys-color-on-secondary: #ffffff;
+  --md-sys-color-secondary-container: #fcddbd;
+  --md-sys-color-on-secondary-container: #281805;
+  --md-sys-color-tertiary: #54643d;
+  --md-sys-color-on-tertiary: #ffffff;
+  --md-sys-color-tertiary-container: #d7e9b9;
+  --md-sys-color-on-tertiary-container: #121f02;
+  --md-sys-color-error: #ba1a1a;
+  --md-sys-color-on-error: #ffffff;
+  --md-sys-color-error-container: #ffdad6;
+  --md-sys-color-on-error-container: #410002;
+  --md-sys-color-background: #fcfcfc;
+  --md-sys-color-on-background: #1b1b1b;
+  --md-sys-color-surface: #fcfcfc;
+  --md-sys-color-on-surface: #1b1b1b;
+  --md-sys-color-surface-variant: #e2e2e2;
+  --md-sys-color-on-surface-variant: #474747;
+  --md-sys-color-outline: #777777;
+  --md-sys-color-outline-variant: #c6c6c6;
+  --md-sys-color-shadow: #000000;
+  --md-sys-color-scrim: #000000;
+  --md-sys-color-inverse-surface: #303030;
+  --md-sys-color-inverse-on-surface: #f1f1f1;
+  --md-sys-color-inverse-primary: #ffb95e;
+  --md-sys-color-surface-dim: #dadada;
+  --md-sys-color-surface-bright: #f9f9f9;
+  --md-sys-color-surface-container-lowest: #ffffff;
+  --md-sys-color-surface-container-low: #f3f3f3;
+  --md-sys-color-surface-container: #eeeeee;
+  --md-sys-color-surface-container-high: #e8e8e8;
+  --md-sys-color-surface-container-highest: #e2e2e2;
+
+  /* Acento de texto: neutro no claro (o amarelo sobre #fcfcfc daria 1,94:1) */
+  --leega-accent-text: var(--md-sys-color-on-surface);
+}
+
+/* Tema escuro pelo sistema, a menos que a página force o claro */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --md-sys-color-primary: #FFA400;
+    --md-sys-color-on-primary: #000000;
+    --md-sys-color-primary-container: #653e00;
+    --md-sys-color-on-primary-container: #ffddb7;
+    --md-sys-color-secondary: #dfc2a2;
+    --md-sys-color-on-secondary: #3f2d17;
+    --md-sys-color-secondary-container: #57432b;
+    --md-sys-color-on-secondary-container: #fcddbd;
+    --md-sys-color-tertiary: #bbcd9e;
+    --md-sys-color-on-tertiary: #273513;
+    --md-sys-color-tertiary-container: #3d4c28;
+    --md-sys-color-on-tertiary-container: #d7e9b9;
+    --md-sys-color-error: #ffb4ab;
+    --md-sys-color-on-error: #690005;
+    --md-sys-color-error-container: #93000a;
+    --md-sys-color-on-error-container: #ffb4ab;
+    --md-sys-color-background: #1b1b1b;
+    --md-sys-color-on-background: #e2e2e2;
+    --md-sys-color-surface: #1b1b1b;
+    --md-sys-color-on-surface: #e2e2e2;
+    --md-sys-color-surface-variant: #474747;
+    --md-sys-color-on-surface-variant: #c6c6c6;
+    --md-sys-color-outline: #919191;
+    --md-sys-color-outline-variant: #474747;
+    --md-sys-color-shadow: #000000;
+    --md-sys-color-scrim: #000000;
+    --md-sys-color-inverse-surface: #e2e2e2;
+    --md-sys-color-inverse-on-surface: #303030;
+    --md-sys-color-inverse-primary: #855300;
+    --md-sys-color-surface-dim: #131313;
+    --md-sys-color-surface-bright: #393939;
+    --md-sys-color-surface-container-lowest: #0e0e0e;
+    --md-sys-color-surface-container-low: #1b1b1b;
+    --md-sys-color-surface-container: #1f1f1f;
+    --md-sys-color-surface-container-high: #2a2a2a;
+    --md-sys-color-surface-container-highest: #353535;
+    --leega-accent-text: var(--md-sys-color-primary);
+  }
+}
+
+/* Tema escuro forçado pela página */
+:root[data-theme="dark"] {
+  --md-sys-color-primary: #FFA400;
+  --md-sys-color-on-primary: #000000;
+  --md-sys-color-primary-container: #653e00;
+  --md-sys-color-on-primary-container: #ffddb7;
+  --md-sys-color-secondary: #dfc2a2;
+  --md-sys-color-on-secondary: #3f2d17;
+  --md-sys-color-secondary-container: #57432b;
+  --md-sys-color-on-secondary-container: #fcddbd;
+  --md-sys-color-tertiary: #bbcd9e;
+  --md-sys-color-on-tertiary: #273513;
+  --md-sys-color-tertiary-container: #3d4c28;
+  --md-sys-color-on-tertiary-container: #d7e9b9;
+  --md-sys-color-error: #ffb4ab;
+  --md-sys-color-on-error: #690005;
+  --md-sys-color-error-container: #93000a;
+  --md-sys-color-on-error-container: #ffb4ab;
+  --md-sys-color-background: #1b1b1b;
+  --md-sys-color-on-background: #e2e2e2;
+  --md-sys-color-surface: #1b1b1b;
+  --md-sys-color-on-surface: #e2e2e2;
+  --md-sys-color-surface-variant: #474747;
+  --md-sys-color-on-surface-variant: #c6c6c6;
+  --md-sys-color-outline: #919191;
+  --md-sys-color-outline-variant: #474747;
+  --md-sys-color-shadow: #000000;
+  --md-sys-color-scrim: #000000;
+  --md-sys-color-inverse-surface: #e2e2e2;
+  --md-sys-color-inverse-on-surface: #303030;
+  --md-sys-color-inverse-primary: #855300;
+  --md-sys-color-surface-dim: #131313;
+  --md-sys-color-surface-bright: #393939;
+  --md-sys-color-surface-container-lowest: #0e0e0e;
+  --md-sys-color-surface-container-low: #1b1b1b;
+  --md-sys-color-surface-container: #1f1f1f;
+  --md-sys-color-surface-container-high: #2a2a2a;
+  --md-sys-color-surface-container-highest: #353535;
+  --leega-accent-text: var(--md-sys-color-primary);
+}
+
+/* Material Web 2.5.0: 48 tokens de componente que usam primary como texto, ícone, borda, indicador
+   ou camada de estado passam a seguir --leega-accent-text (amarelo só no escuro, 8,66:1 sobre #1b1b1b) */
+:root {
+  --md-outlined-button-label-text-color: var(--leega-accent-text);
+  --md-outlined-button-icon-color: var(--leega-accent-text);
+  --md-outlined-button-hover-label-text-color: var(--leega-accent-text);
+  --md-outlined-button-hover-icon-color: var(--leega-accent-text);
+  --md-outlined-button-focus-label-text-color: var(--leega-accent-text);
+  --md-outlined-button-focus-icon-color: var(--leega-accent-text);
+  --md-outlined-button-pressed-label-text-color: var(--leega-accent-text);
+  --md-outlined-button-pressed-icon-color: var(--leega-accent-text);
+  --md-outlined-button-hover-state-layer-color: var(--leega-accent-text);
+  --md-outlined-button-pressed-state-layer-color: var(--leega-accent-text);
+  --md-text-button-label-text-color: var(--leega-accent-text);
+  --md-text-button-icon-color: var(--leega-accent-text);
+  --md-text-button-hover-label-text-color: var(--leega-accent-text);
+  --md-text-button-hover-icon-color: var(--leega-accent-text);
+  --md-text-button-focus-label-text-color: var(--leega-accent-text);
+  --md-text-button-focus-icon-color: var(--leega-accent-text);
+  --md-text-button-pressed-label-text-color: var(--leega-accent-text);
+  --md-text-button-pressed-icon-color: var(--leega-accent-text);
+  --md-text-button-hover-state-layer-color: var(--leega-accent-text);
+  --md-text-button-pressed-state-layer-color: var(--leega-accent-text);
+  --md-outlined-text-field-caret-color: var(--leega-accent-text);
+  --md-outlined-text-field-focus-caret-color: var(--leega-accent-text);
+  --md-outlined-text-field-focus-label-text-color: var(--leega-accent-text);
+  --md-outlined-text-field-focus-outline-color: var(--leega-accent-text);
+  --md-primary-tab-active-label-text-color: var(--leega-accent-text);
+  --md-primary-tab-active-icon-color: var(--leega-accent-text);
+  --md-primary-tab-active-indicator-color: var(--leega-accent-text);
+  --md-primary-tab-active-hover-label-text-color: var(--leega-accent-text);
+  --md-primary-tab-active-hover-icon-color: var(--leega-accent-text);
+  --md-primary-tab-active-focus-label-text-color: var(--leega-accent-text);
+  --md-primary-tab-active-focus-icon-color: var(--leega-accent-text);
+  --md-primary-tab-active-pressed-label-text-color: var(--leega-accent-text);
+  --md-primary-tab-active-pressed-icon-color: var(--leega-accent-text);
+  --md-primary-tab-active-hover-state-layer-color: var(--leega-accent-text);
+  --md-primary-tab-active-pressed-state-layer-color: var(--leega-accent-text);
+  --md-primary-tab-pressed-state-layer-color: var(--leega-accent-text);
+  --md-radio-selected-icon-color: var(--leega-accent-text);
+  --md-radio-selected-hover-icon-color: var(--leega-accent-text);
+  --md-radio-selected-focus-icon-color: var(--leega-accent-text);
+  --md-radio-selected-pressed-icon-color: var(--leega-accent-text);
+  --md-radio-selected-hover-state-layer-color: var(--leega-accent-text);
+  --md-radio-pressed-state-layer-color: var(--leega-accent-text);
+  --md-linear-progress-active-indicator-color: var(--leega-accent-text);
+  --md-circular-progress-active-indicator-color: var(--leega-accent-text);
+  --md-checkbox-pressed-state-layer-color: var(--leega-accent-text);
+  --md-checkbox-selected-hover-state-layer-color: var(--leega-accent-text);
+  --md-switch-selected-hover-state-layer-color: var(--leega-accent-text);
+  --md-switch-selected-pressed-state-layer-color: var(--leega-accent-text);
+}
+
+/* Switch selecionado: a alça continua preta em hover, foco e pressed (o padrão cairia em primary-container);
+   7 tokens, não são acento de texto */
+:root {
+  --md-switch-selected-hover-handle-color: var(--md-sys-color-on-primary);
+  --md-switch-selected-focus-handle-color: var(--md-sys-color-on-primary);
+  --md-switch-selected-pressed-handle-color: var(--md-sys-color-on-primary);
+  --md-switch-selected-icon-color: var(--md-sys-color-primary);
+  --md-switch-selected-hover-icon-color: var(--md-sys-color-primary);
+  --md-switch-selected-focus-icon-color: var(--md-sys-color-primary);
+  --md-switch-selected-pressed-icon-color: var(--md-sys-color-primary);
+}
+
+/* Títulos da marca em caixa alta (o manual manda, os tokens do M3 não cobrem) */
+.leega-caps {
+  text-transform: uppercase;
+}
+
+/* Subtítulos por layout (manual, páginas 9 e 10) */
+.leega-subtitulo-gilroy {
+  font-family: var(--leega-typeface-signature);
+  font-weight: 500; /* manual: "médio" */
+}
+.leega-subtitulo-montserrat {
+  font-family: "Montserrat", system-ui, sans-serif;
+  font-weight: 400; /* manual: regular */
+  text-transform: uppercase;
+}
