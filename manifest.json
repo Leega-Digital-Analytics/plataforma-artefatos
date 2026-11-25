@@ -1,1 +1,13 @@
-[]
+[
+  {
+    "slug": "design-system-leega",
+    "titulo": "Design system Leega",
+    "descricao": "Marca Leega (manual 2026) como tema sobre componentes Material Design 3: regras de uso, cores, tipografia, tokens e componentes, com temas claro e escuro.",
+    "dono": "Tech lead da BU de Digital Analytics",
+    "versao": "2026.11.19",
+    "repositorio_origem": "Wiki pessoal da tech lead, exportação de 19/11/2026 (repositório privado, não listado)",
+    "commit_origem": "4e65f9a0292bdacedeffeba1582c4ed7c045fec2",
+    "publicado_em": "2026-11-25",
+    "higienizado": true
+  }
+]
