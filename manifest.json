@@ -9,5 +9,16 @@
     "commit_origem": "4e65f9a0292bdacedeffeba1582c4ed7c045fec2",
     "publicado_em": "2026-11-25",
     "higienizado": true
+  },
+  {
+    "slug": "proposta-governanca-projetos-claude",
+    "titulo": "Proposta de governança dos projetos Claude da BU",
+    "descricao": "Rascunho em revisão: repositório por projeto com promoção de artefatos, backup por hooks, padrões distribuídos como plugin, plataforma de artefatos em duas fases e política de dados em três níveis.",
+    "dono": "Tech lead da BU de Digital Analytics",
+    "versao": "2026.11.25",
+    "repositorio_origem": "Wiki pessoal da tech lead, projeto Inventário de artefatos da BU (repositório privado, não listado)",
+    "commit_origem": "98fa58372a6dd340a4470e5a5d59bbb14e529eb8",
+    "publicado_em": "2026-11-25",
+    "higienizado": true
   }
 ]
