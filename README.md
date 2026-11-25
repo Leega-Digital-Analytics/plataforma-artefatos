@@ -16,7 +16,7 @@ Catálogo dos artefatos higienizados que os projetos Claude da BU de Digital Ana
 ## Estrutura
 
 ```
-index.html            catálogo (lê manifest.json, com busca)
+index.html            plataforma: menu lateral, visualizador e catálogo (lê manifest.json, com busca)
 manifest.json         lista de artefatos publicados (JSON, array)
 artefatos/<slug>/     um artefato por pasta: index.html, assets/, metadata.json
 assets/               tokens do design system Leega e logos oficiais
@@ -24,6 +24,13 @@ assets/               tokens do design system Leega e logos oficiais
 ```
 
 Cada entrada do `manifest.json` e cada `artefatos/<slug>/metadata.json` têm: `slug`, `titulo`, `descricao`, `dono`, `versao`, `repositorio_origem`, `commit_origem`, `publicado_em` (AAAA-MM-DD) e `higienizado: true`.
+
+## Navegação
+
+- **Menu lateral** (Material 3): fixo à esquerda a partir de 960 px; em telas estreitas vira gaveta aberta pelo botão de menu da barra superior (fecha com Esc, toque no fundo ou ao escolher um item). Traz "Início" e os artefatos em ordem alfabética, com campo de busca.
+- **Visualizador:** o artefato abre na área à direita, em um `iframe` da mesma origem. URL compartilhável com hash: `#/a/<slug>` (por exemplo `#/a/design-system-leega`). `#/` é o catálogo.
+- **Botões da barra superior:** menu (telas estreitas), voltar ao catálogo, anterior e próximo (na ordem do menu), abrir em nova aba (`artefatos/<slug>/`) e copiar link. Atalhos: Alt+← e Alt+→ para anterior e próximo.
+- Slug desconhecido no hash mostra uma mensagem com link para o início. Links internos de um artefato navegam dentro do `iframe`.
 
 ## Como publicar
 
