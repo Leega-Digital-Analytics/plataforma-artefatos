@@ -226,11 +226,11 @@
   <div class="conteudo" id="conteudo">
     <section class="catalogo" id="catalogo" aria-label="Catálogo">
       <main>
-        <p class="intro">Artefatos higienizados publicados pelos projetos da BU para outras áreas. Nesta fase de piloto o site é aberto; o acesso restrito a convidados chega com a migração para o Cloudflare.</p>
+        <p class="intro">Artefatos higienizados compartilhados pelos projetos da BU para outras áreas. Nesta fase de piloto o site é aberto; o acesso restrito a convidados chega com a migração para o Cloudflare.</p>
         <label for="busca" class="intro">Buscar artefato</label>
         <input id="busca" class="busca" type="search" placeholder="Título, descrição ou dono" autocomplete="off">
         <ul id="lista" class="grade" aria-live="polite"></ul>
-        <div id="vazio" class="vazio" hidden>Nenhum artefato publicado ainda. A publicação é feita pela skill <code>/padroes-bu:publicar-artefato</code>, sempre por pull request.</div>
+        <div id="vazio" class="vazio" hidden>Nenhum artefato compartilhado ainda. O compartilhamento é feito pela skill <code>/padroes-bu:compartilhar-artefato</code>, sempre por pull request.</div>
       </main>
       <footer>Leega, BU de Digital Analytics. Piloto público no GitHub Pages.</footer>
     </section>
@@ -238,7 +238,7 @@
       <iframe id="quadro" title="Artefato" allow="clipboard-write; fullscreen" hidden></iframe>
       <div class="nao-encontrado" id="nao-encontrado" hidden>
         <h2>Artefato não encontrado</h2>
-        <p>Não existe um artefato com o identificador informado no link. Ele pode ter sido renomeado ou ainda não foi publicado.</p>
+        <p>Não existe um artefato com o identificador informado no link. Ele pode ter sido renomeado ou ainda não foi compartilhado.</p>
         <a class="btn-tonal" href="#/">Ir para o início</a>
       </div>
     </section>
@@ -313,7 +313,7 @@
       el.menuLista.append(it.li);
     }
     if (erro) mostrarAvisoMenu('Não foi possível carregar a lista de artefatos. Tente recarregar a página.');
-    else if (!artefatos.length) mostrarAvisoMenu('Nenhum artefato publicado ainda.');
+    else if (!artefatos.length) mostrarAvisoMenu('Nenhum artefato compartilhado ainda.');
     else mostrarAvisoMenu('');
     filtrarMenu();
     marcarAtivo();
